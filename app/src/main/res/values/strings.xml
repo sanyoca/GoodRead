@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GoodRead</string>
+    <string name="search">Type your search criteria</string>
+    <string name="list">List the books</string>
+    <string name="nobookfound">No book found, matching your criteria</string>
+    <string name="nointernet">No internet connection</string>
+</resources>
