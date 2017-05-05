@@ -9,13 +9,15 @@
     <ImageView
         android:id="@+id/image_bookthumbnail"
         android:layout_width="96dp"
-        android:layout_height="116dp" />
+        android:layout_height="116dp"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_marginLeft="@dimen/default_paddingmargin"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="RtlHardcoded">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -26,6 +28,7 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textStyle="bold"
                 android:id="@+id/text_title"
+                android:ellipsize="marquee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="title here" />
@@ -40,6 +43,7 @@
 
         <TextView
             android:textAppearance="?android:textAppearanceMedium"
+            android:ellipsize="marquee"
             android:id="@+id/text_authors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
