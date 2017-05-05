@@ -18,6 +18,10 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
         stringCriteria = criteria;
     }
 
+    protected void onStartLoading()	{
+        forceLoad();
+    }
+
     @Override
     public List<BookDatas> loadInBackground() {
         return null;

@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void startSearch(String criteria)    {
         BookLoader loadBooks = new BookLoader(this, criteria);
-
     }
 
     @Override
