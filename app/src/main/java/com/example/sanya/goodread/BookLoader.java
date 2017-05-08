@@ -187,8 +187,21 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
                     }
                 }
 
-                String stringPublisher = volinfo.getString("publisher");
-                String stringPublishedDate = volinfo.getString("publishedDate");
+                String stringPublisher;
+                try {
+                    stringPublisher = volinfo.getString("publisher");
+                }   catch (JSONException e) {
+                    Log.i("bookDataParsingFromThis", e.getMessage().toString());
+                    stringPublisher = "NA   ";
+                }
+
+                String stringPublishedDate;
+                try {
+                    stringPublishedDate = volinfo.getString("publishedDate");
+                }   catch (JSONException e){
+                    Log.i("bookDataParsingFromThis", e.getMessage().toString());
+                    stringPublishedDate = "NA   ";
+                }
 
                 String stringAverageRating;
                 String stringRatingsCount;
@@ -197,6 +210,7 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
                     stringAverageRating = volinfo.getString("averageRating");
                     stringRatingsCount = volinfo.getString("ratingsCount");
                 }   catch   (JSONException e)   {
+                    Log.i("bookDataParsingFromThis", e.getMessage().toString());
                     stringAverageRating = "0";
                     stringRatingsCount = "0";
                 }
@@ -209,6 +223,7 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
                     InputStream is = (InputStream) new URL(stringThumbnailURL).getContent();
                     drawbleBookThumbnail = Drawable.createFromStream(is, stringThumbnailURL);
                 } catch (Exception e) {
+                    Log.i("bookDataParsingFromThis", e.getMessage().toString());
                     return null;
                 }
 

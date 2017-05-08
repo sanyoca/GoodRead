@@ -4,4 +4,5 @@
     <string name="list">List the books</string>
     <string name="nobookfound">No books found matching your criteria</string>
     <string name="nointernet">No internet connection</string>
+    <string name="rating">Rating:</string>
 </resources>

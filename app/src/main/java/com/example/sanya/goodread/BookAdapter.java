@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,15 +37,17 @@ public class BookAdapter extends ArrayAdapter<BookDatas>{
         TextView textPublished = (TextView) listItemView.findViewById(R.id.text_published);
         TextView textPublisher = (TextView) listItemView.findViewById(R.id.text_publisher);
         TextView textAuthors = (TextView) listItemView.findViewById(R.id.text_authors);
-        TextView textRatings = (TextView) listItemView.findViewById(R.id.text_ratings);
         ImageView imageThumbnail = (ImageView) listItemView.findViewById(R.id.image_bookthumbnail);
+        RatingBar rateBook = (RatingBar) listItemView.findViewById(R.id.ratingbar);
+        TextView textRating = (TextView) listItemView.findViewById(R.id.text_ratingcount);
 
         textTitle.setText(actualBook.getTitle());
         textPublished.setText(actualBook.getPublishedDate().substring(0,4));
         textPublisher.setText("("+actualBook.getPublisher()+")");
         textAuthors.setText(actualBook.getAuthors());
-        textRatings.setText("Average rating (Counts): " + String.valueOf(actualBook.getAverageRating() + " (" + String.valueOf(actualBook.getRatings()) + ")"));
         imageThumbnail.setImageDrawable(actualBook.getThumbnail());
+        textRating.setText("(" + String.valueOf(actualBook.getRatings()) + ")");
+        rateBook.setRating(actualBook.getAverageRating());
 
         return listItemView;
     }

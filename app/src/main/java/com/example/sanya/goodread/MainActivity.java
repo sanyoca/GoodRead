@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         // and the emptyview disappear
         emptyView.setVisibility(View.INVISIBLE);
         // let's start it. Async. In the background. On a different thread.
-        BookLoader loadBooks = new BookLoader(this, "https://www.googleapis.com/books/v1/volumes?q="+stringCriteria);
+        BookLoader loadBooks = new BookLoader(this, "https://www.googleapis.com/books/v1/volumes?q="+stringCriteria+"&maxResults=20");
         // return the fetched data to onLoadFinished
         return loadBooks;
     }

@@ -3,12 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#2196F3</item>
-        <item name="colorPrimaryDark">#1976D2</item>
-        <item name="colorAccent">#E040FB</item>
+        <item name="colorPrimary">#001427</item>
+        <item name="colorPrimaryDark">#bfdbf7</item>
+        <item name="colorAccent">#a31621</item>
     </style>
 
     <style name="bookinfo">
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/infotextsize</item>

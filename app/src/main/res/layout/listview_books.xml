@@ -20,38 +20,57 @@
         tools:ignore="RtlHardcoded">
 
         <TextView
-            style="@style/bookinfo"
             android:id="@+id/text_title"
+            style="@style/bookinfo"
             android:textStyle="bold"
             tools:text="title here" />
 
         <TextView
-            style="@style/bookinfo"
             android:id="@+id/text_authors"
+            style="@style/bookinfo"
             android:ellipsize="marquee"
             android:maxLines="1"
             android:textStyle="italic"
             tools:text="authors here" />
 
         <TextView
+            android:id="@+id/text_published"
             style="@style/bookinfo"
             android:layout_marginTop="@dimen/half_paddingmargins"
-            android:id="@+id/text_published"
             tools:text="published data here" />
 
         <TextView
             android:id="@+id/text_publisher"
+            style="@style/bookinfo"
             android:ellipsize="middle"
             android:maxLines="1"
-            style="@style/bookinfo"
             tools:text="(publisher data here)" />
 
-        <TextView
-            android:id="@+id/text_ratings"
+        <LinearLayout
+            android:layout_marginTop="@dimen/half_paddingmargins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            tools:text="ratings here" />
+            android:orientation="horizontal">
+
+
+            <RatingBar
+                android:id="@+id/ratingbar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.1" />
+
+            <TextView
+                style="@style/bookinfo"
+                android:layout_marginLeft="@dimen/half_paddingmargins"
+                android:id="@+id/text_ratingcount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="rating count here" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
