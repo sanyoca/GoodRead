@@ -30,19 +30,29 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
 
     public BookLoader(Context context, String criteria) {
         super(context);
+        // set the search criteria
         stringCriteria = criteria;
     }
 
+    /**
+     * start the loader
+     */
     protected void onStartLoading()	{
         forceLoad();
     }
 
+    /**
+     *
+     * @return a list of bookdatas to display
+     * the stuff we do in the background. Async. On another thread.
+     */
     @Override
     public List<BookDatas> loadInBackground() {
         List<BookDatas> loadIntoThis;
 
         URL urlGetDataFromHere = null;
 
+        // get the URL from the string
         try {
             urlGetDataFromHere = transformIntoURL(stringCriteria);
         }   catch   (MalformedURLException e)   {
@@ -50,31 +60,51 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
             return null;
         }
 
+        // build up the connection
         HttpURLConnection bookConnection = openConnection(urlGetDataFromHere);
         String stringBookJSONData = null;
 
+        // if the connection was successful
         if(bookConnection != null)  {
+            // get the JSON adat
             stringBookJSONData = getJSONDataFromHere(bookConnection);
         }   else    {
+            // else return a null
             return null;
         }
 
+        // if receiving the JSON data was successful (it's not empty)
         if(!stringBookJSONData.isEmpty())   {
+            // then parse it into a nice List<BookDatas>
             loadIntoThis = bookDataParsingFromThis(stringBookJSONData);
         }   else    {
+            // else return null
             return null;
         }
+        // return with the parsed data
         return loadIntoThis;
     }
 
+    /**
+     *
+     * @param stringURL the String URL to be transfromed into a real URL
+     * @return an URL
+     * @throws MalformedURLException
+     */
     private URL transformIntoURL(String stringURL) throws MalformedURLException {
         URL urlGetDataFromHere = new URL(stringCriteria);
         return urlGetDataFromHere;
     }
 
+    /**
+     *
+     * @param urlConnection from which we want to receive datas
+     * @return a connection we can use to fetch datas
+     */
     private HttpURLConnection openConnection(URL urlConnection)   {
         HttpURLConnection bookConnection = null;
 
+        // try to open a connection
         try {
             bookConnection = (HttpURLConnection) urlConnection.openConnection();
             bookConnection.setReadTimeout(10000);
@@ -82,41 +112,60 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
             bookConnection.setRequestMethod("GET");
             bookConnection.connect();
 
+            // is it okay? is the response what we expected?
             if (bookConnection.getResponseCode() == 200) {
+                // yes, return with the connection object
                 return bookConnection;
             }   else    {
+                // no, return a null
                 Log.i("loadInBackground", "Error response code: " + bookConnection.getResponseCode());
                 return bookConnection;
             }
         } catch (IOException e) {
+            // something went awry
             Log.i("loadInBackGround", "Problem opening connection: "+ e.getMessage().toString());
         }
         return bookConnection;
     }
 
+    /**
+     *
+     * @param connection the connection to be used to fetch data
+     * @return a String, read from the connection, to be used in parsing in bookDataParsingFromThis method
+     */
     private String getJSONDataFromHere(HttpURLConnection connection)    {
         StringBuilder bookList = new StringBuilder();
 
+        // try to build a stream
         try {
             InputStream bookStream = connection.getInputStream();
             bookList = new StringBuilder();
+            // if it's okay, read
             if (bookStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(bookStream, Charset.forName("UTF-8"));
                 BufferedReader reader = new BufferedReader(inputStreamReader);
                 String line = reader.readLine();
+                // until there is no more thing to read
                 while (line != null) {
                     bookList.append(line);
                     line = reader.readLine();
                 }
             }
         }   catch   (IOException e) {
+            // something went awry
             Log.i("getJSONDataFromHere", e.getMessage().toString());
         }
         return bookList.toString();
     }
 
+    /**
+     *
+     * @param stringBookDatas the String to be parsed
+     * @return a List<BookDatas> to be put into the adapter
+     */
     private List<BookDatas> bookDataParsingFromThis(String stringBookDatas)   {
         List<BookDatas> tempStore = new ArrayList<>();
+
 
         try {
             JSONObject bookJSON = new JSONObject(stringBookDatas);
