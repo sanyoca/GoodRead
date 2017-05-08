@@ -1,11 +1,13 @@
 package com.example.sanya.goodread;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by sanya on 2017.05.04..
  */
 
 public class BookDatas {
-    private String stringThumbnailUrl;
+    private Drawable drawableThumbnail;
     private String stringTitle;
     private String stringPublished;
     private String stringPublisher;
@@ -13,8 +15,8 @@ public class BookDatas {
     private float floatAverageRating;
     private int intRatingsCount;
 
-    public BookDatas(String authors, String title, String published, String publisher, int ratings, float averageRating, String thumbnail)  {
-        stringThumbnailUrl = thumbnail;
+    public BookDatas(String authors, String title, String published, String publisher, int ratings, float averageRating, Drawable thumbnail)  {
+        drawableThumbnail = thumbnail;
         stringTitle = title;
         stringPublished = published;
         stringPublisher = publisher;
@@ -45,5 +47,9 @@ public class BookDatas {
 
     public float getAverageRating() {
         return floatAverageRating;
+    }
+
+    public Drawable getThumbnail() {
+        return drawableThumbnail;
     }
 }

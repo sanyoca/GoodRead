@@ -21,10 +21,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<BookDatas>>, View.OnClickListener{
 
-    BookLoader loadBooks;
     String stringCriteria;
     ListView listview_listbooks;
     BookAdapter bookAdapter;
+    TextView emptyView = (TextView) findViewById(R.id.text_emptyview);
+    ProgressBar pb = (ProgressBar) findViewById(R.id.progress_loadbooks);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,10 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public Loader<List<BookDatas>> onCreateLoader(int id, Bundle args) {
-        loadBooks = new BookLoader(this, "https://www.googleapis.com/books/v1/volumes?q="+stringCriteria);
+        pb.setVisibility(View.VISIBLE);
+        BookLoader loadBooks = new BookLoader(this, "https://www.googleapis.com/books/v1/volumes?q="+stringCriteria);
+        emptyView = (TextView) findViewById(R.id.text_emptyview);
+        emptyView.setVisibility(View.INVISIBLE);
         return loadBooks;
     }
 
@@ -60,15 +64,13 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         // data set. This will trigger the ListView to update.
         if (books != null && !books.isEmpty()) {
             bookAdapter.addAll(books);
-            TextView emptyView = (TextView) findViewById(R.id.text_emptyview);
-            emptyView.setText("");
+            emptyView.setVisibility(View.INVISIBLE);
 
         }   else    {
-            TextView emptyView = (TextView) findViewById(R.id.text_emptyview);
+            emptyView.setVisibility(View.VISIBLE);
             emptyView.setText("No books found matching your criteria");
         }
-        ProgressBar pB = (ProgressBar) findViewById(R.id.progress_loadbooks);
-        pB.setVisibility(View.GONE);
+        pb.setVisibility(View.GONE);
     }
 
     @Override
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             stringCriteria = searchEdit.getText().toString();
             startSearch();
         }   else    {
-            TextView emptyView = (TextView) findViewById(R.id.text_emptyview);
+            emptyView.setVisibility(View.VISIBLE);
             emptyView.setText(getString(R.string.nointernet));
         }
     }

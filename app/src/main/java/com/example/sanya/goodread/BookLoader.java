@@ -2,6 +2,7 @@ package com.example.sanya.goodread;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -129,7 +130,10 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
                 JSONArray authorsArray = volinfo.getJSONArray("authors");
                 StringBuilder stringAuthors = new StringBuilder();
                 for(int j=0; j< authorsArray.length(); j++) {
-                    stringAuthors.append(authorsArray.getString(j)).append(", ");
+                    stringAuthors.append(authorsArray.getString(j));
+                    if(authorsArray.length()>1 && j<authorsArray.length()-1) {
+                        stringAuthors.append(", ");
+                    }
                 }
 
                 String stringPublisher = volinfo.getString("publisher");
@@ -147,9 +151,17 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
                 }
 
                 JSONObject thumbnails = volinfo.getJSONObject("imageLinks");
-                String stringThumbnail = thumbnails.getString("smallThumbnail");
+                String stringThumbnailURL = thumbnails.getString("smallThumbnail");
 
-                BookDatas newBook = new BookDatas(stringAuthors.toString(), stringTitle, stringPublishedDate, stringPublisher, Integer.valueOf(stringRatingsCount), Float.valueOf(stringAverageRating), stringThumbnail);
+                Drawable drawbleBookThumbnail = null;
+                try {
+                    InputStream is = (InputStream) new URL(stringThumbnailURL).getContent();
+                    drawbleBookThumbnail = Drawable.createFromStream(is, stringThumbnailURL);
+                } catch (Exception e) {
+                    return null;
+                }
+
+                BookDatas newBook = new BookDatas(stringAuthors.toString(), stringTitle, stringPublishedDate, stringPublisher, Integer.valueOf(stringRatingsCount), Float.valueOf(stringAverageRating), drawbleBookThumbnail);
 
                 tempStore.add(newBook);
             }
