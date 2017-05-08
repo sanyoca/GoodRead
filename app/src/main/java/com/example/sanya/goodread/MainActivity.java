@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // initialize the view we'll use in the activity's methods
+        // initialize the views we'll use in the activity's methods
         emptyView = (TextView) findViewById(R.id.text_emptyview);               // the emptyview *doh*
         loadInProgress = (ProgressBar) findViewById(R.id.progress_loadbooks);   // the progressbar
         Button listButton = (Button) findViewById(R.id.button_list);            // the listing button
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         listview_listbooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // visit the clicked book website
                 BookDatas bookToVisit = bookAdapter.getItem(position);
                 Uri bookURL = Uri.parse(bookToVisit.getBookURL());
                 Intent visitBook = new Intent(Intent.ACTION_VIEW, bookURL);
