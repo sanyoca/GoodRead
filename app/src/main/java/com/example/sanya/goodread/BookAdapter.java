@@ -31,7 +31,7 @@ public class BookAdapter extends ArrayAdapter<BookDatas>{
                     R.layout.listview_books, parent, false);
         }
 
-        final BookDatas actualBook = getItem(position);
+        BookDatas actualBook = getItem(position);
         TextView textTitle = (TextView) listItemView.findViewById(R.id.text_title);
         TextView textPublished = (TextView) listItemView.findViewById(R.id.text_published);
         TextView textPublisher = (TextView) listItemView.findViewById(R.id.text_publisher);
@@ -40,10 +40,10 @@ public class BookAdapter extends ArrayAdapter<BookDatas>{
         ImageView imageThumbnail = (ImageView) listItemView.findViewById(R.id.image_bookthumbnail);
 
         textTitle.setText(actualBook.getTitle());
-        textPublished.setText(actualBook.getPublishedDate());
-        textPublisher.setText(actualBook.getPublisher());
+        textPublished.setText(actualBook.getPublishedDate().substring(0,4));
+        textPublisher.setText("("+actualBook.getPublisher()+")");
         textAuthors.setText(actualBook.getAuthors());
-        textRatings.setText(String.valueOf(actualBook.getRatings()) + " / " + String.valueOf(actualBook.getAverageRating()));
+        textRatings.setText("Average rating (Counts): " + String.valueOf(actualBook.getAverageRating() + " (" + String.valueOf(actualBook.getRatings()) + ")"));
         imageThumbnail.setImageDrawable(actualBook.getThumbnail());
 
         return listItemView;

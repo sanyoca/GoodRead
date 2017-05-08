@@ -51,8 +51,8 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
         }
 
         HttpURLConnection bookConnection = openConnection(urlGetDataFromHere);
-
         String stringBookJSONData = null;
+
         if(bookConnection != null)  {
             stringBookJSONData = getJSONDataFromHere(bookConnection);
         }   else    {
@@ -128,7 +128,9 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
                 JSONObject volinfo = actualBook.getJSONObject("volumeInfo");
                 String stringTitle = volinfo.getString("title");
                 JSONArray authorsArray = volinfo.getJSONArray("authors");
+                String bookUrl = volinfo.getString("infoLink");
                 StringBuilder stringAuthors = new StringBuilder();
+                stringAuthors.append("By ");
                 for(int j=0; j< authorsArray.length(); j++) {
                     stringAuthors.append(authorsArray.getString(j));
                     if(authorsArray.length()>1 && j<authorsArray.length()-1) {
@@ -161,8 +163,7 @@ public class BookLoader extends AsyncTaskLoader<List<BookDatas>> {
                     return null;
                 }
 
-                BookDatas newBook = new BookDatas(stringAuthors.toString(), stringTitle, stringPublishedDate, stringPublisher, Integer.valueOf(stringRatingsCount), Float.valueOf(stringAverageRating), drawbleBookThumbnail);
-
+                BookDatas newBook = new BookDatas(stringAuthors.toString(), stringTitle, stringPublishedDate, stringPublisher, Integer.valueOf(stringRatingsCount), Float.valueOf(stringAverageRating), drawbleBookThumbnail, bookUrl);
                 tempStore.add(newBook);
             }
         }   catch (JSONException e) {

@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/image_bookthumbnail"
-        android:layout_width="96dp"
-        android:layout_height="116dp"
+        android:layout_width="@dimen/image_width"
+        android:layout_height="@dimen/image_height"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
@@ -20,44 +20,38 @@
         tools:ignore="RtlHardcoded">
 
         <TextView
+            style="@style/bookinfo"
             android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:textAppearance="?android:textAppearanceMedium"
             android:textStyle="bold"
             tools:text="title here" />
 
         <TextView
+            style="@style/bookinfo"
             android:id="@+id/text_authors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:textAppearance="?android:textAppearanceMedium"
+            android:maxLines="1"
+            android:textStyle="italic"
             tools:text="authors here" />
 
         <TextView
-            android:layout_marginTop="8dp"
+            style="@style/bookinfo"
+            android:layout_marginTop="@dimen/half_paddingmargins"
             android:id="@+id/text_published"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceMedium"
             tools:text="published data here" />
 
         <TextView
             android:id="@+id/text_publisher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceMedium"
-            tools:text="publisher data here" />
-
+            android:ellipsize="middle"
+            android:maxLines="1"
+            style="@style/bookinfo"
+            tools:text="(publisher data here)" />
 
         <TextView
             android:id="@+id/text_ratings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceMedium"
-            tools:text="ratings" />
+            android:textSize="12sp"
+            tools:text="ratings here" />
 
     </LinearLayout>
 

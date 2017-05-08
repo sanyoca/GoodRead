@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 
 public class BookDatas {
     private Drawable drawableThumbnail;
+    private String urlBook;
     private String stringTitle;
     private String stringPublished;
     private String stringPublisher;
@@ -15,7 +16,7 @@ public class BookDatas {
     private float floatAverageRating;
     private int intRatingsCount;
 
-    public BookDatas(String authors, String title, String published, String publisher, int ratings, float averageRating, Drawable thumbnail)  {
+    public BookDatas(String authors, String title, String published, String publisher, int ratings, float averageRating, Drawable thumbnail, String bookURL)  {
         drawableThumbnail = thumbnail;
         stringTitle = title;
         stringPublished = published;
@@ -23,6 +24,7 @@ public class BookDatas {
         stringAuthors = authors;
         floatAverageRating = averageRating;
         intRatingsCount = ratings;
+        urlBook = bookURL;
     }
 
     public String getAuthors()   {
@@ -51,5 +53,9 @@ public class BookDatas {
 
     public Drawable getThumbnail() {
         return drawableThumbnail;
+    }
+
+    public String getBookURL() {
+        return urlBook;
     }
 }

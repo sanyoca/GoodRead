@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="default_paddingmargin">16dp</dimen>
+    <dimen name="half_paddingmargins">8dp</dimen>
+    <dimen name="image_width">96dp</dimen>
+    <dimen name="image_height">116dp</dimen>
+    <dimen name="infotextsize">15sp</dimen>
+
 </resources>

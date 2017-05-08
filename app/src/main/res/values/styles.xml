@@ -8,4 +8,9 @@
         <item name="colorAccent">#E040FB</item>
     </style>
 
+    <style name="bookinfo">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/infotextsize</item>
+    </style>
 </resources>
