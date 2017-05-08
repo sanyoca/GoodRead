@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/default_paddingmargin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/default_paddingmargin">
 
     <ImageView
         android:id="@+id/image_bookthumbnail"
@@ -13,47 +13,50 @@
         tools:ignore="ContentDescription" />
 
     <LinearLayout
-        android:layout_marginLeft="@dimen/default_paddingmargin"
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_paddingmargin"
+        android:orientation="vertical"
         tools:ignore="RtlHardcoded">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textStyle="bold"
-                android:id="@+id/text_title"
-                android:ellipsize="marquee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="title here" />
-
-            <TextView
-                android:id="@+id/text_published"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="published data\n here" />
-        </LinearLayout>
+            android:ellipsize="marquee"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textStyle="bold"
+            tools:text="title here" />
 
         <TextView
-            android:textAppearance="?android:textAppearanceMedium"
-            android:ellipsize="marquee"
             android:id="@+id/text_authors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textAppearance="?android:textAppearanceMedium"
             tools:text="authors here" />
 
         <TextView
-            android:textAppearance="?android:textAppearanceMedium"
+            android:layout_marginTop="8dp"
+            android:id="@+id/text_published"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceMedium"
+            tools:text="published data here" />
+
+        <TextView
+            android:id="@+id/text_publisher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceMedium"
+            tools:text="publisher data here" />
+
+
+        <TextView
             android:id="@+id/text_ratings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceMedium"
             tools:text="ratings" />
 
     </LinearLayout>

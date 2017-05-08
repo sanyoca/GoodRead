@@ -8,20 +8,22 @@ public class BookDatas {
     private String stringThumbnailUrl;
     private String stringTitle;
     private String stringPublished;
-    private String[] stringAuthors;
+    private String stringPublisher;
+    private String stringAuthors;
     private float floatAverageRating;
     private int intRatingsCount;
 
-    public BookDatas(String[] authors, String title, String published, int ratings, float averageRating, String thumbnail)  {
+    public BookDatas(String authors, String title, String published, String publisher, int ratings, float averageRating, String thumbnail)  {
         stringThumbnailUrl = thumbnail;
         stringTitle = title;
         stringPublished = published;
+        stringPublisher = publisher;
         stringAuthors = authors;
         floatAverageRating = averageRating;
         intRatingsCount = ratings;
     }
 
-    public String[] getAuthor()   {
+    public String getAuthors()   {
         return stringAuthors;
     }
 
@@ -31,6 +33,10 @@ public class BookDatas {
 
     public String getPublishedDate()    {
         return stringPublished;
+    }
+
+    public String getPublisher()    {
+        return stringPublisher;
     }
 
     public int getRatings() {
