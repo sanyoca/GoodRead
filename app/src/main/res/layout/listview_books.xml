@@ -37,7 +37,7 @@
             android:id="@+id/text_published"
             style="@style/bookinfo"
             android:layout_marginTop="@dimen/half_paddingmargins"
-            tools:text="published data here" />
+            tools:text="published date here" />
 
         <TextView
             android:id="@+id/text_publisher"
