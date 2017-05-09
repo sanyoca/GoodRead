@@ -5,4 +5,5 @@
     <string name="nobookfound">No books found matching your criteria</string>
     <string name="nointernet">No internet connection</string>
     <string name="rating">Rating:</string>
+    <string name="ratingscounthere">ratings count here</string>
 </resources>
