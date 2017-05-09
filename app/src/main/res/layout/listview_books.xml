@@ -68,7 +68,7 @@
                 android:id="@+id/text_ratingcount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="rating count here" />
+                android:hint="ratings count here" />
 
         </LinearLayout>
 
