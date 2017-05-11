@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         listButton.setOnClickListener(this);
         bookAdapter = new BookAdapter(this, new ArrayList<BookDatas>());
         listview_listbooks.setAdapter(bookAdapter);
+        listview_listbooks.setEmptyView(emptyView);
 
         // set an onitemclicklistener on the adapter, so the items can be clicked
         listview_listbooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -109,8 +110,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         // if the datas we' got contains anything, display it
         if (books != null && !books.isEmpty()) {
             bookAdapter.addAll(books);
-            // and make the emptyview disappear
-            emptyView.setVisibility(View.INVISIBLE);
         }   else    {
             // if there are no datas set the emptyview text
             emptyView.setText(getString(R.string.nobookfound));
@@ -123,9 +122,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                 // then change the emptyview text again
                 emptyView.setText(getString(R.string.nointernet));
             }
-            // and finally make the text appear
-            emptyView.setVisibility(View.VISIBLE);
-
         }
         // and make the progressbar woooosh!
         loadInProgress.setVisibility(View.INVISIBLE);
@@ -160,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         }   else    {
             // no, clear the adapter and make the message appear
             bookAdapter.clear();
-            emptyView.setVisibility(View.VISIBLE);
             emptyView.setText(getString(R.string.nointernet));
         }
     }
