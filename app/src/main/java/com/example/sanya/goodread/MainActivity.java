@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                         Toast.makeText(getApplicationContext(), getString(R.string.nowebsite), Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    bookAdapter.clear();
                     emptyView.setText(getString(R.string.nointernet));
                 }
             }
@@ -74,8 +75,10 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             public boolean onQueryTextSubmit(String query) {
                 // start the search on the criteria, the user wrote
                 if(isConnected()) {
-                    stringCriteria = query;
-                    startSearch();
+                    if(!query.isEmpty())    {
+                        stringCriteria = query;
+                        startSearch();
+                    }
                 }   else    {
                     // or popup a toast, if no internet connection was found
                     bookAdapter.clear();
@@ -92,15 +95,20 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
         // do we have an internet connection
         if(isConnected()) {
-            // yes, get a loader
+            // yes, get a loader and the possible datas
             getLoaderManager().initLoader(0, null, this);
         }   else    {
-            emptyView.setText(getString(R.string.nointernet));
+            // if we don't have internet connection, we might still have something in the adapter
+            if(!bookAdapter.isEmpty())   {
+                emptyView.setText(getString(R.string.nointernet));
+            }   else    {
+                getLoaderManager().initLoader(0, null, this);
+            }
         }
     }
 
     /**
-     * This one starts the search when the list button is clicked
+     * This one starts the search when the searchview is done
      */
     public void startSearch()    {
         // make the soft keyboard disappear
