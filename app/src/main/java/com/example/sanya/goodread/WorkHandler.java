@@ -114,13 +114,13 @@ public final class WorkHandler  {
             for(int i = 0; i< JSONItems.length(); i++) {
                 JSONObject actualBook = JSONItems.getJSONObject(i);
                 // get datas, that every book has
-                JSONObject volinfo = actualBook.getJSONObject("volumeInfo");
-                String stringTitle = volinfo.getString("title");
-                String bookUrl = volinfo.getString("infoLink");
+                JSONObject volInfo = actualBook.getJSONObject("volumeInfo");
+                String stringTitle = volInfo.getString("title");
+                String bookUrl = volInfo.getString("infoLink");
 
                 StringBuilder stringAuthors = new StringBuilder();
-                if (volinfo.has("authors")) {
-                    JSONArray authorsArray = volinfo.getJSONArray("authors");
+                if (volInfo.has("authors")) {
+                    JSONArray authorsArray = volInfo.getJSONArray("authors");
                     // if there is more authors, append them
                     stringAuthors.append(context.getString(R.string.by)).append(" ");
                     for(int j=0; j< authorsArray.length(); j++) {
@@ -136,7 +136,7 @@ public final class WorkHandler  {
                 String stringPublisher;
                 // get the publisher, if no such thing, place 'NA'
                 try {
-                    stringPublisher = volinfo.getString("publisher");
+                    stringPublisher = volInfo.getString("publisher");
                 }   catch (JSONException e) {
                     Log.i("bookDataParsingFromThis", e.getMessage());
                     stringPublisher = context.getString(R.string.na) + "   ";
@@ -145,7 +145,7 @@ public final class WorkHandler  {
                 String stringPublishedDate;
                 // get the publisheddate, if no such thing, place 'NA'
                 try {
-                    stringPublishedDate = volinfo.getString("publishedDate");
+                    stringPublishedDate = volInfo.getString("publishedDate");
                 }   catch (JSONException e){
                     Log.i("bookDataParsingFromThis", e.getMessage());
                     stringPublishedDate = context.getString(R.string.na) + "   ";
@@ -155,15 +155,15 @@ public final class WorkHandler  {
                 String stringRatingsCount;
                 // get the ratings, if no data, they are '0'
                 try {
-                    stringAverageRating = volinfo.getString("averageRating");
-                    stringRatingsCount = volinfo.getString("ratingsCount");
+                    stringAverageRating = volInfo.getString("averageRating");
+                    stringRatingsCount = volInfo.getString("ratingsCount");
                 }   catch   (JSONException e)   {
                     Log.i("bookDataParsingFromThis", e.getMessage());
                     stringAverageRating = "0";
                     stringRatingsCount = "0";
                 }
 
-                JSONObject thumbnails = volinfo.getJSONObject("imageLinks");
+                JSONObject thumbnails = volInfo.getJSONObject("imageLinks");
                 String stringThumbnailURL = thumbnails.getString("smallThumbnail");
 
                 // read the thumbnail from the website and convert it into a drawable
