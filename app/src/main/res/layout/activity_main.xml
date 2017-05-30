@@ -7,19 +7,11 @@
     android:padding="@dimen/default_paddingmargin"
     tools:context="com.example.sanya.goodread.MainActivity">
 
-    <EditText
-        android:id="@+id/edit_searchcriteria"
+    <android.support.v7.widget.SearchView
+        android:queryHint="@string/search"
+        android:id="@+id/searchbook"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/search" />
-
-    <Button
-        android:id="@+id/button_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/list" />
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"

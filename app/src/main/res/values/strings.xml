@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">GoodRead</string>
     <string name="search">Type your search criteria</string>
-    <string name="list">List the books</string>
     <string name="nobookfound">No books found matching your criteria.\nPlease type some words to start the search.</string>
     <string name="nointernet">No internet connection</string>
     <string name="rating">Rating:</string>
     <string name="ratingscounthere">ratings count here</string>
     <string name="nowebsite">No website available.</string>
+    <string name="na">NA</string>
+    <string name="by">By</string>
 </resources>

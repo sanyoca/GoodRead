@@ -9,12 +9,11 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +22,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<BookDatas>>, View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<BookDatas>>{
 
     TextView emptyView;
     ProgressBar loadInProgress;
@@ -39,11 +38,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         // initialize the views we'll use in the activity's methods
         emptyView = (TextView) findViewById(R.id.text_emptyview);               // the emptyview *doh*
         loadInProgress = (ProgressBar) findViewById(R.id.progress_loadbooks);   // the progressbar
-        Button listButton = (Button) findViewById(R.id.button_list);            // the listing button
         listview_listbooks = (ListView) findViewById(R.id.list_books);          // the listview
 
         // make the list button to list the books
-        listButton.setOnClickListener(this);
         bookAdapter = new BookAdapter(this, new ArrayList<BookDatas>());
 
         // set the adapter and the emptyview
@@ -68,6 +65,28 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                 } else {
                     emptyView.setText(getString(R.string.nointernet));
                 }
+            }
+        });
+
+        // set the searchview
+        ((SearchView) findViewById(R.id.searchbook)).setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // start the search on the criteria, the user wrote
+                if(isConnected()) {
+                    stringCriteria = query;
+                    startSearch();
+                }   else    {
+                    // or popup a toast, if no internet connection was found
+                    bookAdapter.clear();
+                    emptyView.setText(getString(R.string.nointernet));
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
             }
         });
 
@@ -151,24 +170,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     }
 
     /**
-     *
-     * @param v the view we clicked on - the list button
+     * Checks if there is an available internet connection
+     * @return true, if yes - false, if no
      */
-    @Override
-    public void onClick(View v) {
-        // is there internet connection
-        if(isConnected()) {
-            // yes, start the search
-            EditText searchEdit = (EditText) findViewById(R.id.edit_searchcriteria);
-            stringCriteria = searchEdit.getText().toString();
-            startSearch();
-        }   else    {
-            // no, clear the adapter and make the message appear
-            bookAdapter.clear();
-            emptyView.setText(getString(R.string.nointernet));
-        }
-    }
-
     private boolean isConnected()   {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -122,7 +122,7 @@ public final class WorkHandler  {
                 if (volinfo.has("authors")) {
                     JSONArray authorsArray = volinfo.getJSONArray("authors");
                     // if there is more authors, append them
-                    stringAuthors.append("By ");
+                    stringAuthors.append(context.getString(R.string.by)).append(" ");
                     for(int j=0; j< authorsArray.length(); j++) {
                         stringAuthors.append(authorsArray.getString(j));
                         if(authorsArray.length()>1 && j<authorsArray.length()-1) {
@@ -130,7 +130,7 @@ public final class WorkHandler  {
                         }
                     }
                 }   else    {
-                    stringAuthors.append("NA");
+                    stringAuthors.append(context.getString(R.string.na));
                 }
 
                 String stringPublisher;
@@ -139,7 +139,7 @@ public final class WorkHandler  {
                     stringPublisher = volinfo.getString("publisher");
                 }   catch (JSONException e) {
                     Log.i("bookDataParsingFromThis", e.getMessage());
-                    stringPublisher = "NA   ";
+                    stringPublisher = context.getString(R.string.na) + "   ";
                 }
 
                 String stringPublishedDate;
@@ -148,7 +148,7 @@ public final class WorkHandler  {
                     stringPublishedDate = volinfo.getString("publishedDate");
                 }   catch (JSONException e){
                     Log.i("bookDataParsingFromThis", e.getMessage());
-                    stringPublishedDate = "NA   ";
+                    stringPublishedDate = context.getString(R.string.na) + "   ";
                 }
 
                 String stringAverageRating;
