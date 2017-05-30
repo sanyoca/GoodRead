@@ -13,42 +13,55 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by sanya on 2017.05.08..
- */
-
 public class BookAdapter extends ArrayAdapter<BookDatas>{
 
     public BookAdapter(Activity context, ArrayList<BookDatas> books)  {
         super(context, 0, books);
     }
 
+    static class ViewHolderItem {
+        TextView text_title;
+        TextView text_published;
+        TextView text_publisher;
+        TextView text_authors;
+        ImageView image_bookthumbnail;
+        RatingBar ratingbar;
+        TextView text_ratingcount;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItemView = convertView;
-        if(listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
+
+        ViewHolderItem viewHolder;
+
+        if(convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.listview_books, parent, false);
+            viewHolder = new ViewHolderItem();
+            viewHolder.text_title = (TextView) convertView.findViewById(R.id.text_title);
+            viewHolder.text_published = (TextView) convertView.findViewById(R.id.text_published);
+            viewHolder.text_publisher = (TextView) convertView.findViewById(R.id.text_publisher);
+            viewHolder.text_authors = (TextView) convertView.findViewById(R.id.text_authors);
+            viewHolder.image_bookthumbnail = (ImageView) convertView.findViewById(R.id.image_bookthumbnail);
+            viewHolder.ratingbar = (RatingBar) convertView.findViewById(R.id.ratingbar);
+            viewHolder.text_ratingcount = (TextView) convertView.findViewById(R.id.text_ratingcount);
+            convertView.setTag(viewHolder);
+        }   else    {
+            viewHolder = (ViewHolderItem) convertView.getTag();
         }
 
         BookDatas actualBook = getItem(position);
-        TextView textTitle = (TextView) listItemView.findViewById(R.id.text_title);
-        TextView textPublished = (TextView) listItemView.findViewById(R.id.text_published);
-        TextView textPublisher = (TextView) listItemView.findViewById(R.id.text_publisher);
-        TextView textAuthors = (TextView) listItemView.findViewById(R.id.text_authors);
-        ImageView imageThumbnail = (ImageView) listItemView.findViewById(R.id.image_bookthumbnail);
-        RatingBar rateBook = (RatingBar) listItemView.findViewById(R.id.ratingbar);
-        TextView textRating = (TextView) listItemView.findViewById(R.id.text_ratingcount);
 
-        textTitle.setText(actualBook.getTitle());
-        textPublished.setText(actualBook.getPublishedDate().substring(0,4));
-        textPublisher.setText("("+actualBook.getPublisher()+")");
-        textAuthors.setText(actualBook.getAuthors());
-        imageThumbnail.setImageDrawable(actualBook.getThumbnail());
-        textRating.setText("(" + String.valueOf(actualBook.getRatings()) + ")");
-        rateBook.setRating(actualBook.getAverageRating());
-
-        return listItemView;
+        if(actualBook != null)  {
+            viewHolder.text_title.setText(actualBook.getTitle());
+            viewHolder.text_published.setText(actualBook.getPublishedDate());
+            viewHolder.text_publisher.setText(actualBook.getPublisher());
+            viewHolder.text_authors.setText(actualBook.getAuthors());
+            viewHolder.image_bookthumbnail.setImageDrawable(actualBook.getThumbnail());
+            viewHolder.ratingbar.setRating(actualBook.getAverageRating());
+            viewHolder.text_ratingcount.setText("(" + String.valueOf(actualBook.getRatings()) + ")");
+        }
+        return convertView;
     }
 }

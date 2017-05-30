@@ -5,5 +5,4 @@
     <dimen name="image_width">96dp</dimen>
     <dimen name="image_height">116dp</dimen>
     <dimen name="infotextsize">15sp</dimen>
-
 </resources>

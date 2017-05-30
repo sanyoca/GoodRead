@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -17,11 +18,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-
-//import android.support.v4.content.Loader;
 
 public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<BookDatas>>, View.OnClickListener{
 
@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     ProgressBar loadInProgress;
     ListView listview_listbooks;
     BookAdapter bookAdapter;
-
     String stringCriteria;
 
     @Override
@@ -46,23 +45,39 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         // make the list button to list the books
         listButton.setOnClickListener(this);
         bookAdapter = new BookAdapter(this, new ArrayList<BookDatas>());
+
+        // set the adapter and the emptyview
         listview_listbooks.setAdapter(bookAdapter);
         listview_listbooks.setEmptyView(emptyView);
 
-        // set an onitemclicklistener on the adapter, so the items can be clicked
+        // set an onitemclicklistener on the adapter, so the items within can be clicked
         listview_listbooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // visit the clicked book website
                 BookDatas bookToVisit = bookAdapter.getItem(position);
-                Uri bookURL = Uri.parse(bookToVisit.getBookURL());
-                Intent visitBook = new Intent(Intent.ACTION_VIEW, bookURL);
-                startActivity(visitBook);
+                // if we had an internet connection
+                if (isConnected()) {
+                    // then try to visit the book's website
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(bookToVisit.getBookURL())));
+                    } catch (NullPointerException e) {
+                        Log.i("Main/onitemclick", e.getMessage());
+                        Toast.makeText(getApplicationContext(), getString(R.string.nowebsite), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    emptyView.setText(getString(R.string.nointernet));
+                }
             }
         });
 
-        // get a loader
-        getLoaderManager().initLoader(0, null, this);
+        // do we have an internet connection
+        if(isConnected()) {
+            // yes, get a loader
+            getLoaderManager().initLoader(0, null, this);
+        }   else    {
+            emptyView.setText(getString(R.string.nointernet));
+        }
     }
 
     /**
@@ -79,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         getLoaderManager().restartLoader(0, null, this);
     }
 
+
     /**
      *
      * @param id the id of the loader to be created
@@ -87,14 +103,15 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
      */
     @Override
     public Loader<List<BookDatas>> onCreateLoader(int id, Bundle args) {
+        // if returned from a book's website, we have to delete the adapter's content, cause it re-reads and appends the datas to the existing adapter datas
+        bookAdapter.clear();
         // make the progressbar appear
         loadInProgress.setVisibility(View.VISIBLE);
         // and the emptyview disappear
-        emptyView.setVisibility(View.INVISIBLE);
+         emptyView.setVisibility(View.INVISIBLE);
         // let's start it. Async. In the background. On a different thread.
-        BookLoader loadBooks = new BookLoader(this, "https://www.googleapis.com/books/v1/volumes?q="+stringCriteria+"&maxResults=20");
         // return the fetched data to onLoadFinished
-        return loadBooks;
+        return new BookLoader(this, "https://www.googleapis.com/books/v1/volumes?q="+stringCriteria+"&maxResults=20");
     }
 
     /**
@@ -111,14 +128,10 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         if (books != null && !books.isEmpty()) {
             bookAdapter.addAll(books);
         }   else    {
-            // if there are no datas set the emptyview text
+            // if there are no datas, set the emptyview text
             emptyView.setText(getString(R.string.nobookfound));
             // but it can be the lack of internet connection
-            ConnectivityManager connectivityManager =
-                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-            boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
-            if(!isConnected) {
+            if(!isConnected()) {
                 // then change the emptyview text again
                 emptyView.setText(getString(R.string.nointernet));
             }
@@ -144,11 +157,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public void onClick(View v) {
         // is there internet connection
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
-        if(isConnected) {
+        if(isConnected()) {
             // yes, start the search
             EditText searchEdit = (EditText) findViewById(R.id.edit_searchcriteria);
             stringCriteria = searchEdit.getText().toString();
@@ -158,5 +167,12 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             bookAdapter.clear();
             emptyView.setText(getString(R.string.nointernet));
         }
+    }
+
+    private boolean isConnected()   {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnectedOrConnecting());
     }
 }

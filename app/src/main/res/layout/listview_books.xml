@@ -21,6 +21,8 @@
 
         <TextView
             android:id="@+id/text_title"
+            android:maxLines="3"
+            android:ellipsize="end"
             style="@style/bookinfo"
             android:textStyle="bold"
             tools:text="title here" />
