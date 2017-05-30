@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     ProgressBar loadInProgress;
     ListView listview_listbooks;
     BookAdapter bookAdapter;
-    String stringCriteria;
+    String stringCriteria = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             // yes, get a loader and the possible datas
             getLoaderManager().initLoader(0, null, this);
         }   else    {
-            // if we don't have internet connection, we might still have something in the adapter
-            if(!bookAdapter.isEmpty())   {
+            // if we don't have internet connection, we might still have something in the adapter/loader
+            if(!bookAdapter.isEmpty() && bookAdapter != null)   {
                 emptyView.setText(getString(R.string.nointernet));
             }   else    {
                 getLoaderManager().initLoader(0, null, this);
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         // make the progressbar appear
         loadInProgress.setVisibility(View.VISIBLE);
         // and the emptyview disappear
-         emptyView.setVisibility(View.INVISIBLE);
+        emptyView.setVisibility(View.INVISIBLE);
         // let's start it. Async. In the background. On a different thread.
         // return the fetched data to onLoadFinished
         return new BookLoader(this, "https://www.googleapis.com/books/v1/volumes?q="+stringCriteria+"&maxResults=20");

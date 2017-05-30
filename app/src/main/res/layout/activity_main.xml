@@ -9,6 +9,7 @@
 
     <android.support.v7.widget.SearchView
         android:queryHint="@string/search"
+        android:iconifiedByDefault="true"
         android:id="@+id/searchbook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
